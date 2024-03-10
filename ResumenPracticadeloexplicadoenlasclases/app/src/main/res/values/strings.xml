@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ResumenPracticadeloexplicadoenlasclases</string>
+    <string name="texto_vertical">Vertical</string>
+    <string name="texto_horizontal">Horizontal</string>
 </resources>

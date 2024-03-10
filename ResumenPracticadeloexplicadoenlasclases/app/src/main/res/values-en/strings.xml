@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ResumePracticeOfTheExplainsOfTheClasses</string>
+    <string name="texto_vertical">Vertical</string>
+    <string name="texto_horizontal">Horizontal</string>
 </resources>
