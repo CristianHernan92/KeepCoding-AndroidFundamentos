@@ -3,4 +3,11 @@
     <string name="app_name">ResumenPracticadeloexplicadoenlasclases</string>
     <string name="texto_vertical">Vertical</string>
     <string name="texto_horizontal">Horizontal</string>
+    <string name="título_EjercicioLinearLayout">EjercicioAndroid2</string>
+    <string name="esfera_de_dragón">esfera de dragón</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Editar_perfil">Editar Perfil</string>
+    <string name="Seguidores">Seguidores</string>
+    <string name="Siguiendo">Siguiendo</string>
+    <string name="Estrellitas">Estrellitas</string>
 </resources>
