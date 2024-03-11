@@ -10,4 +10,8 @@
     <string name="Seguidores">Followers</string>
     <string name="Siguiendo">Following</string>
     <string name="Estrellitas">Stars</string>
+    <string name="Asunto">Affair</string>
+    <string name="Contenido">Content</string>
+    <string name="Fecha">Date</string>
+    <string name="Estrellita">Star</string>
 </resources>

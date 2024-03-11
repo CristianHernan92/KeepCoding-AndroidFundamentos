@@ -10,4 +10,8 @@
     <string name="Seguidores">Seguidores</string>
     <string name="Siguiendo">Siguiendo</string>
     <string name="Estrellitas">Estrellitas</string>
+    <string name="Asunto">Asunto</string>
+    <string name="Contenido">Contenido</string>
+    <string name="Fecha">Fecha</string>
+    <string name="Estrellita">Estrellita</string>
 </resources>
