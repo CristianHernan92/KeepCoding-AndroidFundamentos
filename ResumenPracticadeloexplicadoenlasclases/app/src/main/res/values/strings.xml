@@ -13,4 +13,6 @@
     <string name="Contenido">Content</string>
     <string name="Fecha">Date</string>
     <string name="Estrellita">Star</string>
+    <string name="loggin">Loggin</string>
+    <string name="Contraseña">Password</string>
 </resources>
