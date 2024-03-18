@@ -1,10 +1,13 @@
 package com.example.resumenpracticadeloexplicadoenlasclases
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
 class MainActivity : AppCompatActivity() {
+
+    val VECES_ON_CREATE = "VECES_ON_CREATE"
 
     //*cuando decimos Activity nos referiremos a la clase
 
@@ -29,6 +32,13 @@ class MainActivity : AppCompatActivity() {
         Log.w("tag warning", "soy un tag de warning")
 
         Log.i("cristian tag onCreate","onCreate")
+
+        //obtenemos el valor del sharedpreference
+        val vecesOnCreate = cargarDePreferencias()
+        Log.i("tag sharedpreferences", vecesOnCreate.toString())
+
+        //guardamos el valor en el sharedpreference
+        guardarEnSharedPreferences(vecesOnCreate + 2)
     }
 
     /*
@@ -135,6 +145,31 @@ class MainActivity : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
         Log.i("cristian tag onRestart","onRestart")
+    }
+
+    //SHARED PREFERENCES
+
+    //-se guardara las veces que se ejecuta el onCreate
+    fun guardarEnSharedPreferences(vecesOnCreate: Int){
+        //la clase en la que estamos hereda de AppCompatActivity(), entonces por eso podemos acceder a "getPreferences" porque estamos en un contexto. Si no estaríamos en una activity que hereda de AppCompatActivity() tendríamos que pasar dicho contexto de alguna manera para poder usar el getPreferences
+        val preferences = getPreferences(Context.MODE_PRIVATE)
+
+        val preferencesEditables = preferences.edit()
+        //ahora el tipo de dato que guardaremos en el shared references
+        //en este caso tenemos que pasarle el "nombre" para luego buscar el fichero por ese nombre y luego el valor
+        preferencesEditables.putInt("VECES_ON_CREATE", vecesOnCreate)
+
+        //guardamos el sharedreferences
+        preferencesEditables.apply()
+    }
+
+    fun cargarDePreferencias() : Int{
+        val preferences = getPreferences(Context.MODE_PRIVATE)
+
+        //leemos la sharedpreference que guardamos
+        //si no encuentra el sharedreference retoranrá 0
+        val valorLeído = preferences.getInt(this.VECES_ON_CREATE,0)
+        return valorLeído
     }
 
 }
