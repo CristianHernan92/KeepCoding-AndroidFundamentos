@@ -9,9 +9,13 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class MainActivityViewModelTest {
+
+    //instanciamos el ViewModel
+    val vm = MainActivityViewModel()
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun comprobarIntEnRango() {
+        assertTrue(vm.numAleatorio > Int.MIN_VALUE)
+        assertTrue(vm.numAleatorio < Int.MAX_VALUE)
     }
 }
