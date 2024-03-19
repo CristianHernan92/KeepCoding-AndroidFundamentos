@@ -16,4 +16,6 @@
     <string name="Estrellita">Estrellita</string>
     <string name="loggin">Logearse</string>
     <string name="Contraseña">Contraseña</string>
+    <string name="añadir">Añadir</string>
+    <string name="toast_text">texto_de_tostada</string>
 </resources>

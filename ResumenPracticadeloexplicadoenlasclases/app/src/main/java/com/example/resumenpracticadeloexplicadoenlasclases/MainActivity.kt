@@ -13,12 +13,8 @@ class MainActivity : AppCompatActivity() {
     val VECES_ON_CREATE = "VECES_ON_CREATE"
 
     //VIEW MODELS
-
-    //instanciamos nuestro ViewModel con la clase que creamos que hereda de ViewModel
+    //fijarse que no instanciamos el ViewModel, aquí estamos obteniendo una instancia del ViewModel MainActivityViewModel
     private val viewModel : MainActivityViewModel by viewModels()
-
-
-
 
 
 
@@ -61,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         //POPUP(TOAST)
         //le pasamos como contexto "this", luego el mensaje y luego la duración (que puede ser larga "LENGTH_LONG" o corta "LENGTH_SHORT")
         Toast.makeText(this, "Este es un popup toast",Toast.LENGTH_LONG).show()
+
+        //ACCESO A LOS STRINGS
+        //agarramos el texto string "toast_text" (se utiliza el contexto para agarrar el string, lo agaramos utilizando el contexto actual, es decir de la pripia clase MainActivity, sino necesitaríamos acceder de alguna manera al contexto tal)
+        //"R" de resources
+        val string = getString(R.string.toast_text)
     }
 
     /*

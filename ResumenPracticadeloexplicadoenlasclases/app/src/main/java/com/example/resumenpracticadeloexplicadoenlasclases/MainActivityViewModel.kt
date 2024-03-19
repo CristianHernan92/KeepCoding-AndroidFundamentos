@@ -10,5 +10,7 @@ class MainActivityViewModel: ViewModel() {
     //asique todos los datos se mantendran con el valor que le pongamos acá porque se instanciará con dichos valores y no se perderan
     //ya que la clase no se destruye por más que giremos el celular
 
+    //*(acá en los viewsmodels no se tienen que usar contextos, sino directamente agarrar los valores por medio del "id" del elemento)
+
     val numAleatorio = Random.nextInt()
 }

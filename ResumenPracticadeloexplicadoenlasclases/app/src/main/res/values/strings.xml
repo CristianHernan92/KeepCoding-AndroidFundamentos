@@ -16,4 +16,5 @@
     <string name="loggin">Loggin</string>
     <string name="Contraseña">Password</string>
     <string name="añadir">Add</string>
+    <string name="toast_text">toast_text</string>
 </resources>
