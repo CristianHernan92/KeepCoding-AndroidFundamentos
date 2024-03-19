@@ -4,10 +4,23 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     val VECES_ON_CREATE = "VECES_ON_CREATE"
+
+    //VIEW MODELS
+
+    //instanciamos nuestro ViewModel con la clase que creamos que hereda de ViewModel
+    private val viewModel : MainActivityViewModel by viewModels()
+
+
+
+
+
 
     //*cuando decimos Activity nos referiremos a la clase
 
@@ -39,6 +52,13 @@ class MainActivity : AppCompatActivity() {
 
         //guardamos el valor en el sharedpreference
         guardarEnSharedPreferences(vecesOnCreate + 2)
+
+
+
+
+        Log.i("tag ViewModel", viewModel.numAleatorio.toString())
+
+        
     }
 
     /*
