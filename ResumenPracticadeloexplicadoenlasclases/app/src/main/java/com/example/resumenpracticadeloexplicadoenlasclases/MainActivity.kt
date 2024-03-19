@@ -58,7 +58,9 @@ class MainActivity : AppCompatActivity() {
 
         Log.i("tag ViewModel", viewModel.numAleatorio.toString())
 
-        
+        //POPUP(TOAST)
+        //le pasamos como contexto "this", luego el mensaje y luego la duración (que puede ser larga "LENGTH_LONG" o corta "LENGTH_SHORT")
+        Toast.makeText(this, "Este es un popup toast",Toast.LENGTH_LONG).show()
     }
 
     /*
