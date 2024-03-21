@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.example.resumenpracticadeloexplicadoenlasclases.databinding.ActivityMainBinding
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +17,9 @@ class MainActivity : AppCompatActivity() {
     //fijarse que no instanciamos el ViewModel, aquí estamos obteniendo una instancia del ViewModel MainActivityViewModel
     private val viewModel : MainActivityViewModel by viewModels()
 
-
+    //ACCESO A LOS ELEMENTOS DE LA VISTA USANDO BINDING
+    //como tipo para el binding nos aparecera para poner los nombres de las vistas xml que existen actualmentea (usaremos la que deseemos manipular con el binding) más la palabra "Binding"
+    lateinit var binding : ActivityMainBinding
 
     //*cuando decimos Activity nos referiremos a la clase
 
@@ -31,7 +34,18 @@ class MainActivity : AppCompatActivity() {
     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_linear_layout)
+
+        //le damos valor al binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        //agarramos el elemento con id "activityMainTextView" que pusimos en la vista "activity_main.xml"
+        var textview = binding.activityMainTextView
+        //utilizamos uno de los metodos del elemento que agarramos
+        textview?.text = "Hola, soy el textview"
+        textview?.setOnClickListener {
+            textview?.text = "Se hizo click en el TextView"
+        }
 
         //LOGS
         Log.d("tag debug", "soy un tag de debug")
