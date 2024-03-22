@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.resumenpracticadeloexplicadoenlasclases.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -45,6 +48,20 @@ class MainActivity : AppCompatActivity() {
         textview?.text = "Hola, soy el textview"
         textview?.setOnClickListener {
             textview?.text = "Se hizo click en el TextView"
+        }
+
+        //button para el State Flow
+        var button = binding.activityMainButton
+        button?.setOnClickListener {
+            //llamamos a la función que le suma uno a la variable state flow
+            viewModel.sumarUnoAl_UIState()
+        }
+        //aquí usams la corrutina lifecycleScope (hilo secundario), se usa para que lo que ponemos adentro desaparezca también y no quede en memoria cuando se borre el activity
+        //adentro le pusimos un bloque de código que se ejecutará cada vez que se detecte que cambió el valor de la variable state flow (cuando se clickee en el botón de arriba se ejecutará, porque el botón hace que la variable state flow cambie de valor)
+        lifecycleScope.launch {
+            viewModel.uiState.collect{it
+                binding.activityMainTextView?.text = it.toString()
+            }
         }
 
         //LOGS
