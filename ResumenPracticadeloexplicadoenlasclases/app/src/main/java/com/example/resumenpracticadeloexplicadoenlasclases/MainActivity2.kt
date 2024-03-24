@@ -13,5 +13,8 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //acá agarramos el string que le pasamos desde la vista "MainActivity"
+        val stringPasado = intent.getStringExtra("DATO1") ?: ""
     }
 }

@@ -1,6 +1,7 @@
 package com.example.resumenpracticadeloexplicadoenlasclases
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -62,6 +63,17 @@ class MainActivity : AppCompatActivity() {
             viewModel.uiState.collect{it
                 binding.activityMainTextView?.text = it.toString()
             }
+        }
+
+        //button para mostrar el segundo activity que creamos
+        var buttonTwo = binding.activityMainButtonTwo
+        buttonTwo?.setOnClickListener {
+            //aquí usamos el "Intent" navegar/mostrar la otra vista/activity que creamos
+            val intent = Intent(this,MainActivity2::class.java)
+            //antes de mostrarla le mandaremos datos
+            intent.putExtra("DATO1", "Hola")
+            //lanzamos/mostramos el activity
+            startActivity(intent)
         }
 
         //LOGS
