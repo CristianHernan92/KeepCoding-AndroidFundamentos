@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
 
     //VIEW MODELS
     //fijarse que no instanciamos el ViewModel, aquí estamos obteniendo una instancia del ViewModel MainActivityViewModel
-    private val viewModel : MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
 
     //ACCESO A LOS ELEMENTOS DE LA VISTA USANDO BINDING
     //como tipo para el binding nos aparecera para poner los nombres de las vistas xml que existen actualmentea (usaremos la que deseemos manipular con el binding) más la palabra "Binding"
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     //*cuando decimos Activity nos referiremos a la clase
 
@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity() {
         //aquí usams la corrutina lifecycleScope (hilo secundario), se usa para que lo que ponemos adentro desaparezca también y no quede en memoria cuando se borre el activity
         //adentro le pusimos un bloque de código que se ejecutará cada vez que se detecte que cambió el valor de la variable state flow (cuando se clickee en el botón de arriba se ejecutará, porque el botón hace que la variable state flow cambie de valor)
         lifecycleScope.launch {
-            viewModel.uiState.collect{it
+            viewModel.uiState.collect {
+                it
                 binding.activityMainTextView?.text = it.toString()
             }
         }
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         var buttonTwo = binding.activityMainButtonTwo
         buttonTwo?.setOnClickListener {
             //aquí usamos el "Intent" navegar/mostrar la otra vista/activity que creamos
-            val intent = Intent(this,MainActivity2::class.java)
+            val intent = Intent(this, MainActivity2::class.java)
             //antes de mostrarla le mandaremos datos
             intent.putExtra("DATO1", "Hola")
             //lanzamos/mostramos el activity
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         Log.v("tag verbose", "soy un tag de verbose") //LOG VERBOSE
         Log.w("tag warning", "soy un tag de warning")
 
-        Log.i("cristian tag onCreate","onCreate")
+        Log.i("cristian tag onCreate", "onCreate")
 
         //obtenemos el valor del sharedpreference
         val vecesOnCreate = cargarDePreferencias()
@@ -99,12 +100,15 @@ class MainActivity : AppCompatActivity() {
 
         //POPUP(TOAST)
         //le pasamos como contexto "this", luego el mensaje y luego la duración (que puede ser larga "LENGTH_LONG" o corta "LENGTH_SHORT")
-        Toast.makeText(this, "Este es un popup toast",Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Este es un popup toast", Toast.LENGTH_LONG).show()
 
         //ACCESO A LOS STRINGS
         //agarramos el texto string "toast_text" (se utiliza el contexto para agarrar el string, lo agaramos utilizando el contexto actual, es decir de la pripia clase MainActivity, sino necesitaríamos acceder de alguna manera al contexto tal)
         //"R" de resources
         val string = getString(R.string.toast_text)
+
+        //FRAGMENTS
+        mostrarFragment()
     }
 
     /*
@@ -120,7 +124,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onStart() {
         super.onStart()
-        Log.i("cristian tag onStart","onStart")
+        Log.i("cristian tag onStart", "onStart")
     }
 
     /*
@@ -138,7 +142,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onResume() {
         super.onResume()
-        Log.i("cristian tag onResume","onResume")
+        Log.i("cristian tag onResume", "onResume")
     }
 
     //EL ONPAUSE ES MUY IMPORTANTE, PORQUE ES EL CICLO DE VIDA RECURRENTE QUIZÄS Y EN DONDE SE AGREGARÏAN TODAS LAS COSAS A PAUSAR (como reproducciones de animaciones,etc.)
@@ -159,7 +163,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onPause() {
         super.onPause()
-        Log.i("cristian tag onPause","onPause")
+        Log.i("cristian tag onPause", "onPause")
     }
 
 
@@ -176,7 +180,7 @@ class MainActivity : AppCompatActivity() {
     */
     override fun onStop() {
         super.onStop()
-        Log.i("cristian tag onStop","onStop")
+        Log.i("cristian tag onStop", "onStop")
     }
 
     /*
@@ -194,7 +198,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("cristian tag onDestroy","onDestroy")
+        Log.i("cristian tag onDestroy", "onDestroy")
     }
 
     /*
@@ -210,13 +214,13 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onRestart() {
         super.onRestart()
-        Log.i("cristian tag onRestart","onRestart")
+        Log.i("cristian tag onRestart", "onRestart")
     }
 
     //SHARED PREFERENCES
 
     //-se guardara las veces que se ejecuta el onCreate
-    fun guardarEnSharedPreferences(vecesOnCreate: Int){
+    fun guardarEnSharedPreferences(vecesOnCreate: Int) {
         //la clase en la que estamos hereda de AppCompatActivity(), entonces por eso podemos acceder a "getPreferences" porque estamos en un contexto. Si no estaríamos en una activity que hereda de AppCompatActivity() tendríamos que pasar dicho contexto de alguna manera para poder usar el getPreferences
         val preferences = getPreferences(Context.MODE_PRIVATE)
 
@@ -229,13 +233,32 @@ class MainActivity : AppCompatActivity() {
         preferencesEditables.apply()
     }
 
-    fun cargarDePreferencias() : Int{
+    fun cargarDePreferencias(): Int {
         val preferences = getPreferences(Context.MODE_PRIVATE)
 
         //leemos la sharedpreference que guardamos
         //si no encuentra el sharedreference retoranrá 0
-        val valorLeído = preferences.getInt(this.VECES_ON_CREATE,0)
+        val valorLeído = preferences.getInt(this.VECES_ON_CREATE, 0)
         return valorLeído
+    }
+
+    //FRAGMENTS
+    fun mostrarFragment() {
+        //usamos el supportFragmentManager para poder mostrar el fragment en el elemento "FrameLayout" de la vista de MainActivity mendiante el id del "FrameLayout"
+        //*dentro del "add" le instanciamos el FirstFragment que queremos mostrar*
+
+        binding.fragmentFirst?.let { it
+            supportFragmentManager
+                .beginTransaction()
+                //con el "add" estamos añadendo fragments a, en este caso, el elemento <FrameLayout> de la vista. Cada add agregará un nuevo fragment a la vista arriba del fragment que ya haya/hayan
+                //para que no sucediera que se agrega un fragment arriba de otro podemos utilizar el "replace" en vez del "add", que lo que hace es reemplazar todos los fragments que haya por el nuevo que se está por meter en vez de agregarlo
+                //(hay que tener en cuenta que estas transacciones son asíncronas, por ende si utilizamos "replace" luego de varios "add" puede que no podamos ver le reemplazo por tema de asincronismo, habría que de alguna manera hacer que el replace se ejecute a lo último para que remplace todo bien)
+                .add(it.id, FirstFragment())
+                //el "addToBackStack" agrega al fragament en la pila del botón "Atrás", es decir cuando se aprete en atrás quitará el fragment y luego si se vuelve a apretar y hay otro fragment en la pila también se quitará y así hasta que solo quede la vista y se retroceda la vista normalmente
+                //si no estaría el "addToBackStack" cuando se ckickee en atrás simplemente se haría el atrás
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
 }

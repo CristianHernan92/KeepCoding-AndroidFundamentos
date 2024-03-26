@@ -40,4 +40,19 @@
 
     </Button>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        >
+
+        <FrameLayout
+            android:id="@+id/fragment_first"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black">
+
+        </FrameLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
