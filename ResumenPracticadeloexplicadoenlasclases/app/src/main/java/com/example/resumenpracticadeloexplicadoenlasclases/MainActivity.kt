@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.resumenpracticadeloexplicadoenlasclases.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -109,6 +110,12 @@ class MainActivity : AppCompatActivity() {
 
         //FRAGMENTS
         mostrarFragment()
+
+        //INTERNET
+        observer_of_uiState_internet()
+        binding.buttonCallApi?.setOnClickListener {
+            viewModel.call_Api()
+        }
     }
 
     /*
@@ -259,6 +266,48 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
+    }
+
+    //INTERNET
+
+    fun observer_of_uiState_internet(){
+        //con "Dispatchers.Main" le estamos diciendo que se ejecute en el hilo principal
+        //acá estamos pendientes de cuando cambie la variable de estado "uiState", cuando cambie se ejecutará lo de dentro del "collect"
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.uiState_internet.collect{ state ->
+                    when (state) {
+                        is MainActivityViewModel.State.Idle -> Idle()
+                        is MainActivityViewModel.State.Error -> showError()
+                        is MainActivityViewModel.State.Loading -> showLoading()
+                        is MainActivityViewModel.State.SuccesTestBasico -> showSuccesTestBasico(state.bootcampList)
+                        is MainActivityViewModel.State.SuccesLogin -> showSuccesLogin()
+                        is MainActivityViewModel.State.SuccesGetHeroes -> showSuccesGetHeroes()
+                    }
+            }
+        }
+    }
+
+    //funciones que se ejecutarán cuando el valor sea tal estado
+    //las llamadas que se harán a las apis tienen que lanzarse en segundo plano para que no afecten al hilo principal
+    fun Idle(){
+
+    }
+
+    fun showError(){
+
+    }
+    fun showLoading(){
+
+    }
+    fun showSuccesTestBasico(bootcampList: String){
+        binding.textViewOfCallApy?.text = bootcampList
+    }
+    fun showSuccesLogin(){
+
+    }
+
+    fun showSuccesGetHeroes(){
+
     }
 
 }
