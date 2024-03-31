@@ -114,7 +114,15 @@ class MainActivity : AppCompatActivity() {
         //INTERNET
         observer_of_uiState_internet()
         binding.buttonCallApi?.setOnClickListener {
-            viewModel.call_Api()
+            viewModel.call_Api_bootcamp()
+        }
+
+        binding.buttonLoggin?.setOnClickListener {
+            viewModel.launchLogin()
+        }
+
+        binding.buttonGetHeroes?.setOnClickListener {
+            viewModel.launchGetHeroes()
         }
     }
 
@@ -281,7 +289,7 @@ class MainActivity : AppCompatActivity() {
                         is MainActivityViewModel.State.Loading -> showLoading()
                         is MainActivityViewModel.State.SuccesTestBasico -> showSuccesTestBasico(state.bootcampList)
                         is MainActivityViewModel.State.SuccesLogin -> showSuccesLogin()
-                        is MainActivityViewModel.State.SuccesGetHeroes -> showSuccesGetHeroes()
+                        is MainActivityViewModel.State.SuccesGetHeroes -> showSuccesGetHeroes(state.heroList)
                     }
             }
         }
@@ -303,11 +311,13 @@ class MainActivity : AppCompatActivity() {
         binding.textViewOfCallApy?.text = bootcampList
     }
     fun showSuccesLogin(){
-
     }
 
-    fun showSuccesGetHeroes(){
-
+    fun showSuccesGetHeroes(heroesList: List<HeroDto>){
+        binding.textViewOfCallApy?.text = ""
+        heroesList.forEach {
+            binding.textViewOfCallApy?.text = binding.textViewOfCallApy?.text.toString() + it.name
+        }
     }
 
 }

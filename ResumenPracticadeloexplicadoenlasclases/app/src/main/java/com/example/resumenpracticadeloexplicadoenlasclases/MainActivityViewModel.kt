@@ -4,10 +4,13 @@ import android.sax.StartElementListener
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okhttp3.Credentials
+import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import kotlin.math.log
@@ -40,6 +43,8 @@ class MainActivityViewModel: ViewModel() {
 
     //INTERNET
 
+    private var token : String = ""
+
     //creamos una variable de estado que sea de tipo State que hará referencia a los estados descritos dentro de la lcase State
     private val _uiState_internet = MutableStateFlow<State>(State.Idle())
     val uiState_internet : StateFlow<State> = _uiState_internet
@@ -52,12 +57,12 @@ class MainActivityViewModel: ViewModel() {
         class Loading : State()
         class SuccesTestBasico (val bootcampList: String) : State()
         class SuccesLogin : State()
-        class SuccesGetHeroes : State()
+        class SuccesGetHeroes(val heroList : List<HeroDto>) : State()
     }
 
     //funciones que llamarán a la api y que modificarán el valor de la variable de estado "uiState_internet" dependiendo del resultado
 
-    fun call_Api(){
+    fun call_Api_bootcamp() {
         //como estamos en el "ViewModel" se utiliza el "viewModelScope" en vez del "lifecycleScope" que se usa en las activities
         //lo lanzamos al hilo secundario para que no moleste al hilo principal
         viewModelScope.launch(Dispatchers.IO) {
@@ -70,14 +75,67 @@ class MainActivityViewModel: ViewModel() {
             val call = client.newCall(request)
             val response = call.execute()
 
-            if(response.isSuccessful){
-                response.body?.let{
+            if (response.isSuccessful) {
+                response.body?.let {
                     //si llega hasta aquí está todo bien, asique actualizamos el valor de la variable de estado _uiState_internet
                     _uiState_internet.value = State.SuccesTestBasico(it.string())
                 } ?: State.Error("No hay dato")
-            } else{
+            } else {
                 _uiState_internet.value = State.Error("la respuesta no fué exitosa")
             }
+        }
+    }
+
+    fun launchLogin() {
+        viewModelScope.launch(Dispatchers.IO) {
+            //cambiamos el valor de la varaible de estado a "Loading" (el cual se podría utilizar para mostrar el circulito cargando)
+            _uiState_internet.value = State.Loading()
+            val client = OkHttpClient()
+            val url = "https://dragonball.keepcoding.education/api/auth/login"
+            val credentials = Credentials.basic("cristianhernandelrio@gmail.com", "KQFhbcuj9Hwgf39")
+            val formBody = FormBody.Builder() // Esto hace que la request sea de tipo POST
+                .build()
+            val request = Request.Builder()
+                .url(url)
+                .addHeader("Authorization", credentials)
+                .post(formBody)
+                .build()
+            val call = client.newCall(request)
+            val response = call.execute()
+            _uiState_internet.value =  if (response.isSuccessful)
+                response.body?.let {
+                    token = it.string()
+                    State.SuccesLogin()
+                } ?: State.Error("Empty Token")
+            else
+                State.Error(response.message)
+        }
+    }
+
+    fun launchGetHeroes() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState_internet.value = State.Loading()
+            val client = OkHttpClient()
+            val url = "https://dragonball.keepcoding.education/api/heros/all"
+            val formBody = FormBody.Builder() // Esto hace que la request sea de tipo POST
+                .add("name", "")
+                .build()
+            val request = Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer $token")
+                .post(formBody)
+                .build()
+            val call = client.newCall(request)
+            val response = call.execute()
+            _uiState_internet.value =  if (response.isSuccessful)
+                response.body?.let {
+                    //acá hacemos el parseo (con Gson) del modelo que nos viene de la api al modelo
+                    val herosDtoArray : Array<HeroDto> = Gson().fromJson(it.string(), Array<HeroDto>::class.java)
+                    //le pasamos el Array en forma de Lista al estado actualizado a SuccesGetHeroes por medio del parámetro
+                    State.SuccesGetHeroes(herosDtoArray.toList())
+                } ?: State.Error("Empty Token")
+            else
+                State.Error(response.message)
         }
     }
 }
