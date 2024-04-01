@@ -9,12 +9,12 @@
     <TextView
         android:id="@+id/activity_main_textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="@string/texto_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
     <Button
         android:id="@+id/activity_main_button"
@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:text="Mostrar el segundo activity"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_main_textView">
@@ -61,7 +60,6 @@
         android:layout_height="50dp"
         android:text="Call Api"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_main_button_Two">
@@ -70,11 +68,11 @@
     <TextView
         android:id="@+id/text_view_of_call_apy"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
 
         app:layout_constraintTop_toBottomOf="@id/button_callApi"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         ></TextView>
@@ -97,5 +95,15 @@
         app:layout_constraintStart_toEndOf="@+id/button_loggin">
 
     </Button>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Lista"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/text_view_of_call_apy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

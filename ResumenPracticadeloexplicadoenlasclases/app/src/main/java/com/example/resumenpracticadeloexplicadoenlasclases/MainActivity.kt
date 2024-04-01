@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.resumenpracticadeloexplicadoenlasclases.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -16,6 +18,7 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
+    private val heroAdapter = HeroAdapter()
     val VECES_ON_CREATE = "VECES_ON_CREATE"
 
     //VIEW MODELS
@@ -124,6 +127,10 @@ class MainActivity : AppCompatActivity() {
         binding.buttonGetHeroes?.setOnClickListener {
             viewModel.launchGetHeroes()
         }
+
+        //LISTAS
+
+        configurarRecyclerView()
     }
 
     /*
@@ -320,4 +327,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //LISTAS
+
+    fun configurarRecyclerView(){
+        //acá le decimos a nuestra vista cómo queremos que pinte la lista, es decir cómo queremos que se vea (vertical,horizontal, en modo grillas, etc.)
+        binding.Lista?.layoutManager = LinearLayoutManager(this)
+        //ó por ejemplo en glilla:
+        //binding.Lista.layoutManager = GridLayoutManager(this, 3)
+
+        //asignamos el adaptador de la lista que manejará las celdas
+        binding.Lista?.adapter = heroAdapter
+    }
 }
