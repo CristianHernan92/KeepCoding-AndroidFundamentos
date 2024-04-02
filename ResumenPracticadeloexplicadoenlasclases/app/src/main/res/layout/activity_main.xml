@@ -106,4 +106,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <Button
+        android:id="@+id/botón_actualizarLista"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Actualizar lista"
+
+        app:layout_constraintTop_toBottomOf="@id/Lista"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+    </Button>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -131,6 +131,11 @@ class MainActivity : AppCompatActivity() {
         //LISTAS
 
         configurarRecyclerView()
+        rellenarLista()
+
+        binding.botNActualizarLista?.setOnClickListener {
+            rellenarListaDesdeBotón()
+        }
     }
 
     /*
@@ -337,5 +342,25 @@ class MainActivity : AppCompatActivity() {
 
         //asignamos el adaptador de la lista que manejará las celdas
         binding.Lista?.adapter = heroAdapter
+    }
+
+    fun rellenarLista(){
+        val list = listOf<Hero>(
+            Hero(nombre = "Goku"),
+            Hero(nombre = "Krilin"),
+            Hero(nombre = "Vegeta"),
+        )
+
+        heroAdapter.actualizarLista(list)
+    }
+
+    fun rellenarListaDesdeBotón(){
+        val list = listOf<Hero>(
+            Hero(nombre = "Goku2"),
+            Hero(nombre = "Krilin2"),
+            Hero(nombre = "Vegeta2"),
+        )
+
+        heroAdapter.actualizarListaDesdeBotón(list)
     }
 }
